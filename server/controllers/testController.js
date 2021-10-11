@@ -1,3 +1,4 @@
+const testModel = require('../models/testModel');
 const modeltest = require('../models/testModel');
 
 const testCtrl = {};
@@ -7,8 +8,13 @@ testCtrl.getEmployees = async(req,res) => {
     res.json(test); 
 };
 
-testCtrl.createEmployee = (req,res)=>{
-    const test = new test(req.body);
+testCtrl.createEmployee = async (req,res)=>{
+    const test = new testModel({
+        name: req.body.name,
+        position: req.body.position,
+        office: res.body.office,
+        salary: req.body.salary
+    });
     await test.save();
     res.json({"status":"saved "});
 };
@@ -19,10 +25,10 @@ testCtrl.getEmployee = async(req,res)=>{
     res.json(emplogyee);
 };
 
-testCtrl.editEmployee = async (req,res)=>{
+testCtrl.editEmployee = async(req,res)=>{
 
     const employee = {
-        name: req.body.name,
+        name: req.body.name, 
         position: req.body.position,
         office: req.body.office,
         salary: req.body.salary
@@ -35,6 +41,6 @@ testCtrl.editEmployee = async (req,res)=>{
 testCtrl.deleteEmployee = async(req,res)=>{
     await modeltest.findByIdAndRemove(req.params.id);
     res.json({status: 'employee deleted'})
-} 
+}
 
 module.exports = testCtrl;
